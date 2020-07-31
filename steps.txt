@@ -1,5 +1,11 @@
 video #1
 + initialize npm
 + create .gitignore(node_modules)
-- create github repository
++ create github repository
+
+video #2
++ create entry point file called server.js
++ install express & mongoose
++ create listening port
++ create database connection
 
