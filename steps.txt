@@ -1,0 +1,5 @@
+video #1
++ initialize npm
++ create .gitignore(node_modules)
+- create github repository
+

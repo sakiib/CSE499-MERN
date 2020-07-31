@@ -1,0 +1,11 @@
+{
+  "name": "restaurant_tutorial_mern",
+  "version": "1.0.0",
+  "description": "Restaurant Application MERN",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sakib",
+  "license": "ISC"
+}
