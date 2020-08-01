@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import isEmail from 'validator/lib/isEmail';
+import isEmpty from 'validator/lib/isEmpty';
+import equals from 'validator/lib/equals';
+import { showErrorMsg } from '../helpers/message';
+import { showSuccessMsg } from '../helpers/message';
+import { showLoading } from '../helpers/loading';
 import { Link } from 'react-router-dom';
 import './Signup.css';
 
@@ -10,7 +16,7 @@ const Signup = () => {
         password2: '',
         successMsg: false,
         errorMsg: false,
-        loading: false
+        loading: true
     });
     const {
         username, 
@@ -25,16 +31,41 @@ const Signup = () => {
     const handleChange = (evt) => {
         setFormData({
             ...formData,
-            [evt.target.name]: evt.target.value
+            [evt.target.name]: evt.target.value,
+            successMsg: '',
+            errorMsg: ''
         });
     };
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
+        // npm validator
+        if (isEmpty(username) || isEmpty(email) || isEmpty(password) || isEmpty(password2)) {
+            setFormData({
+                ...formData,
+                errorMsg: 'All fields are required'
+            });
+        } else if (!isEmail(email)) {
+            setFormData({
+                ...formData,
+                errorMsg: 'Invalid email'
+            });
+        } else if (!equals(password, password2)) {
+            setFormData({
+                ...formData,
+                errorMsg: 'Passwords do not match'
+            });
+        } else {
+            // Success
+            setFormData({
+                ...formData,
+                successMsg: 'validation success'
+            }); 
+        }
     };
 
     const showSignUpForm = () => (
-        <form className='signup-form' onSubmit={handleSubmit}>
+        <form className='signup-form' onSubmit={handleSubmit} noValidate>
             {/* username field */}
             <div className='form-group input-group'>
                 <div className='input-group-prepend'>
@@ -73,12 +104,12 @@ const Signup = () => {
             </div>
             {/* signup button */}
             <div className='form-group'>
-                <button type='submit' className='btn btn-primary btn-black'> Create Account </button>
+                <button type='submit' className='btn btn-primary btn-block'> Signup </button>
             </div>
             {/* Already have an account? */}
             <p className='text-center text-white'>
                 Have an account?
-                <Link to='/signin'> Sign In </Link>
+                <Link to='/signin'> Log In </Link>
             </p>
         </form>
     );
@@ -86,8 +117,10 @@ const Signup = () => {
         <div className='signup-container'>
             <div className='row px-3 vh-100'>
                 <div className='col-md-5 mx-auto align-self-center'> 
+                { errorMsg && showErrorMsg(errorMsg) }
+                { successMsg && showSuccessMsg(successMsg) }
+                <div className='text-center pb-4'> { loading && showLoading() } </div>
                 { showSignUpForm() }
-                <p style={{ color: 'white' }}> { JSON.stringify(formData) } </p>
                 </div>
             </div>
         </div>
