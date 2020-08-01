@@ -8,8 +8,11 @@ const authRoutes = require('./routes/auth');
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
-app.use('/api/auth', authRoutes);
+app.use('/', (req, res) => {
+    res.send('I am in Server');
+});
 
+app.use('/api/auth', authRoutes);
 
 const connectDB = require('./database/db');
 connectDB();
