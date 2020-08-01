@@ -9,3 +9,9 @@ video #2
 + create listening port
 + create database connection
 
+video #3
++ npm install nodemon
++ npx create-react-app client
+
+video #4:
+later..
