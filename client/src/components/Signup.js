@@ -7,6 +7,7 @@ import { showSuccessMsg } from '../helpers/message';
 import { showLoading } from '../helpers/loading';
 import { Link } from 'react-router-dom';
 import './Signup.css';
+import { signup } from '../api/auth';
 
 const Signup = () => {
     const[formData, setFormData] = useState({
@@ -16,7 +17,7 @@ const Signup = () => {
         password2: '',
         successMsg: false,
         errorMsg: false,
-        loading: true
+        loading: false
     });
     const {
         username, 
@@ -57,10 +58,25 @@ const Signup = () => {
             });
         } else {
             // Success
-            setFormData({
-                ...formData,
-                successMsg: 'validation success'
-            }); 
+            const {username, email, pass} = formData;
+            const data = {username, email, pass};
+            setFormData({...formData, loading: true});
+            signup(data)
+                .then(response => {
+                    console.log('axios signup success ', response);
+                    setFormData({
+                        username: '', 
+                        email: '', 
+                        password: '', 
+                        password2: '',
+                        loading: false,
+                        successMsg: response.data.successMessage
+                    });
+                })
+                .catch(err => {
+                    console.log('axios signup error ', err);
+                    setFormData({...formData, loading: false});
+                });
         }
     };
 
