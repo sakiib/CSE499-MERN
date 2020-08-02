@@ -41,7 +41,6 @@ const Signup = () => {
         evt.preventDefault();
         // npm validator
         if (isEmpty(username) || isEmpty(email) || isEmpty(password) || isEmpty(password2)) {
-            console.log('something empty');
             setFormData({
                 ...formData,
                 errorMsg: 'All fields are required'
@@ -60,11 +59,9 @@ const Signup = () => {
             });
         } else {
             // Success
-            console.log('in success');
             const { username, email, password } = formData;
             const data = { username, email, password };
             setFormData({ ...formData, loading: true });
-            console.log(data);
             signup(data)
                 .then((response) => {
                     console.log('axios signup success ', response);

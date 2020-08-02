@@ -26,3 +26,7 @@ exports.signupController = async (req, res) => {
         });
     }
 };
+
+exports.signinController = async (req, res) => {
+    
+};
