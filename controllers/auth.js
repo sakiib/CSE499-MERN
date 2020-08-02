@@ -2,7 +2,6 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 
 exports.signupController = async (req, res) => {
-    console.log('in controller ', req.body);
     const { username, email, password } = req.body;
     try {
         const user = await User.findOne({ email });
