@@ -39,7 +39,6 @@ const Signup = () => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        console.log('in handleSubmit of signup.js');
         // npm validator
         if (isEmpty(username) || isEmpty(email) || isEmpty(password) || isEmpty(password2)) {
             console.log('something empty');
