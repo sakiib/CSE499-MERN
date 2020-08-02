@@ -4,7 +4,9 @@ import isEmpty from 'validator/lib/isEmpty';
 import { Link } from 'react-router-dom';
 import { showErrorMsg } from '../helpers/message';
 import { showLoading } from '../helpers/loading';
+import { setAuthentication } from '../helpers/auth';
 import { signin } from '../api/auth';
+// import { response } from 'express';
 
 const Signin = () => {
     const[formData, setFormData] = useState({
@@ -12,14 +14,12 @@ const Signin = () => {
         password: '',
         errorMsg: false,
         loading: false,
-        redirectToDashboard: false,
     });
     const {
         email, 
         password, 
         errorMsg, 
         loading,
-        redirectToDashboard,
     } = formData;
 
     const handleChange = (evt) => {
@@ -49,6 +49,12 @@ const Signin = () => {
             const data = { email, password };
             setFormData({ ...formData, loading: true });
             signin(data)
+                .then(response => {
+                    setAuthentication(response.data.token, response.data.user);
+                })
+                .catch(err => {
+                    console.log('signin api error ', err);
+                })
         }
     };
 
