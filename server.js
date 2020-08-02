@@ -3,19 +3,14 @@ const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
 const authRoutes = require('./routes/auth');
+const connectDB = require('./database/db');
 
 // Middleware
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
-
-app.use('/', (req, res) => {
-    res.send('I am in Server!');
-});
-
 app.use('/api/auth', authRoutes);
 
-const connectDB = require('./database/db');
 connectDB();
 
 const port = process.env.PORT || 5000;

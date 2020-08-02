@@ -17,7 +17,7 @@ const Signup = () => {
         password2: '',
         successMsg: false,
         errorMsg: false,
-        loading: false
+        loading: false,
     });
     const {
         username, 
@@ -26,7 +26,7 @@ const Signup = () => {
         password2, 
         successMsg, 
         errorMsg, 
-        loading
+        loading,
     } = formData;
 
     const handleChange = (evt) => {
@@ -34,35 +34,41 @@ const Signup = () => {
             ...formData,
             [evt.target.name]: evt.target.value,
             successMsg: '',
-            errorMsg: ''
+            errorMsg: '',
         });
     };
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
+        console.log('in handleSubmit of signup.js');
         // npm validator
         if (isEmpty(username) || isEmpty(email) || isEmpty(password) || isEmpty(password2)) {
+            console.log('something empty');
             setFormData({
                 ...formData,
                 errorMsg: 'All fields are required'
             });
         } else if (!isEmail(email)) {
+            console.log('invalid email');
             setFormData({
                 ...formData,
                 errorMsg: 'Invalid email'
             });
         } else if (!equals(password, password2)) {
+            console.log('password doesnot mathc');
             setFormData({
                 ...formData,
                 errorMsg: 'Passwords do not match'
             });
         } else {
             // Success
-            const {username, email, pass} = formData;
-            const data = {username, email, pass};
-            setFormData({...formData, loading: true});
+            console.log('in success');
+            const { username, email, password } = formData;
+            const data = { username, email, password };
+            setFormData({ ...formData, loading: true });
+            console.log(data);
             signup(data)
-                .then(response => {
+                .then((response) => {
                     console.log('axios signup success ', response);
                     setFormData({
                         username: '', 
@@ -73,9 +79,9 @@ const Signup = () => {
                         successMsg: response.data.successMessage
                     });
                 })
-                .catch(err => {
+                .catch((err) => {
                     console.log('axios signup error ', err);
-                    setFormData({...formData, loading: false, errorMsg: err.response.data.errorMessage});
+                    setFormData({ ...formData, loading: false, errorMsg: err.response.data.errorMessage });
                 });
         }
     };
