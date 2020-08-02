@@ -17,7 +17,7 @@ exports.signupController = async (req, res) => {
         newUser.password = await bcrypt.hash(password, salt);
         await newUser.save();
         res.json({
-            successMessage: 'registration successful'
+            successMessage: 'registration successful. Please Signin'
         });
     } catch(err) {
         console.log('signupController error ', err);
