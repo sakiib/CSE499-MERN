@@ -34,7 +34,7 @@ const AdminDashboard = () => {
         .then((response) => {
           setLoading(false);
           setSuccessMsg(response.data.successMessage);
-          setCategory("");
+          setCategory('');
         })
         .catch((err) => {
           setLoading(false);
