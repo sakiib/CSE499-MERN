@@ -13,10 +13,38 @@ const AdminDashboard = () => {
                 </div>
             </div> 
         </div>
-    )
+    );
+
+    const showActionBtns = () => (
+        <div className='bg-lite my-2'>
+            <div className='container'>
+                <div className='row pb-3'>
+                    <div className='col-md-4 my-1'>
+                        <button className='btn btn-outline-info btn-block'>
+                            <i className='fas fa-plus'> Add Category </i> 
+                        </button>
+                    </div>
+
+                    <div className='col-md-4 my-1'>
+                        <button className='btn btn-outline-warning btn-block'>
+                            <i className='fas fa-plus'> Add Food Item </i> 
+                        </button>
+                    </div>
+
+                    <div className='col-md-4 my-1'>
+                        <button className='btn btn-outline-success btn-block'>
+                            <i className='fas fa-money-check-alt'> View Orders </i> 
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+
     return (
         <section>  
             { showHeader() }
+            { showActionBtns() }
         </section>
     )
 }
