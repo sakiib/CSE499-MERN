@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import isEmail from 'validator/lib/isEmail';
 import isEmpty from 'validator/lib/isEmpty';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { showErrorMsg } from '../helpers/message';
 import { showLoading } from '../helpers/loading';
 import { setAuthentication, isAuthenticated } from '../helpers/auth';
 import { signin } from '../api/auth';
 
 const Signin = () => {
+    let history = useHistory();
+    useEffect(() => {
+        if (isAuthenticated() && isAuthenticated().role === 1) {
+            history.push('/admin/dashboard');
+        } else if (isAuthenticated() && isAuthenticated().role === 0) {
+            history.push('/user/dashboard');
+        }
+    }, [history]);
     const[formData, setFormData] = useState({
         email: '', 
         password: '',
@@ -52,8 +60,10 @@ const Signin = () => {
                     setAuthentication(response.data.token, response.data.user);
                     if (isAuthenticated() && isAuthenticated().role === 1) {
                         console.log('redirect to admin dashboard');
+                        history.push('/admin/dashboard');
                     } else if (isAuthenticated() && isAuthenticated().role === 0){
                         console.log('redirect to user dashboard');
+                        history.push('/user/dashboard');
                     }
                 })
                 .catch(err => {
