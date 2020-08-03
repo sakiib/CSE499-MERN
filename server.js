@@ -1,15 +1,17 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const cors = require('cors');
-const morgan = require('morgan');
-const authRoutes = require('./routes/auth');
-const connectDB = require('./database/db');
+const cors = require("cors");
+const morgan = require("morgan");
+const authRoutes = require("./routes/auth");
+const categoryRoutes = require("./routes/category");
+const connectDB = require("./database/db");
 
 // Middleware
 app.use(cors());
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(express.json());
-app.use('/api/auth', authRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/category", categoryRoutes);
 
 connectDB();
 
