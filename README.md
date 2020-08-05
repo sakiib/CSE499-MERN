@@ -1,2 +1,3 @@
 # Restaurant-Learning-MERN
-### Learning MERN with WebStoreMaker!!
+### Full-stack Restaurant web application with react, node.js, express & mongodb
+#### Learning MERN with WebStoreMaker
