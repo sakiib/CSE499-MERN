@@ -12,9 +12,11 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
+// api/path
 app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
 
+// mongoDB cloud connection
 connectDB();
 
 const port = process.env.PORT || 5000;
