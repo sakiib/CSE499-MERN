@@ -1,17 +1,1 @@
-video #1
-+ initialize npm
-+ create .gitignore(node_modules)
-+ create github repository
-
-video #2
-+ create entry point file called server.js
-+ install express & mongoose
-+ create listening port
-+ create database connection
-
-video #3
-+ npm install nodemon
-+ npx create-react-app client
-
-video #4:
-later..
+step by step...
