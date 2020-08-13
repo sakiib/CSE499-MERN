@@ -73,7 +73,7 @@ const AdminDashboard = () => {
 
           <div className="col-md-4 my-1">
             <button className="btn btn-outline-warning btn-block">
-              <i className="fas fa-plus"> Add Food</i>
+              <i className="fas fa-plus"> Add Product </i>
             </button>
           </div>
 
@@ -132,6 +132,7 @@ const AdminDashboard = () => {
       </div>
     </div>
   );
+  
   return (
     <section>
       {showHeader()}

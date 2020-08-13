@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const cookieParser = require('cookie-parser');
 const authRoutes = require("./routes/auth");
 const categoryRoutes = require("./routes/category");
+const productRoutes = require("./routes/product");
 const connectDB = require("./database/db");
 
 // Middleware
@@ -16,6 +17,7 @@ app.use(cookieParser());
 // /api/path
 app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
+app.use("/api/product", productRoutes);
 
 // mongoDB cloud connection
 connectDB();
