@@ -1,11 +1,13 @@
 import React, { useState, Fragment } from "react";
 import { createCategory } from "../api/category";
+import { createProduct } from "../api/product";
 import isEmpty from "validator/lib/isEmpty";
 import { showErrorMsg, showSuccessMsg } from "../helpers/message";
 import { showLoading } from "../helpers/loading";
 
 const AdminDashboard = () => {
   const [category, setCategory] = useState("");
+  const [product, setProduct] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,6 +23,12 @@ const AdminDashboard = () => {
     setCategory(evt.target.value);
   };
 
+  const handleProductChange = (evt) => {
+    setErrorMsg("");
+    setSuccessMsg("");
+    setCategory(evt.target.value);
+  };
+
   const handleCategorySubmit = (evt) => {
     evt.preventDefault();
 
@@ -28,6 +36,28 @@ const AdminDashboard = () => {
       setErrorMsg("Please enter a category");
     } else {
       const data = { category };
+
+      setLoading(true);
+      createCategory(data)
+        .then((response) => {
+          setLoading(false);
+          setSuccessMsg(response.data.successMessage);
+          setCategory('');
+        })
+        .catch((err) => {
+          setLoading(false);
+          setErrorMsg(err.response.data.errorMessage);
+        });
+    }
+  };
+
+  const handleProductSubmit = (evt) => {
+    evt.preventDefault();
+
+    if (isEmpty(product)) {
+      setErrorMsg("Please enter a porduct");
+    } else {
+      const data = { product };
 
       setLoading(true);
       createCategory(data)
@@ -67,19 +97,22 @@ const AdminDashboard = () => {
               data-toggle="modal"
               data-target="#addCategoryModal"
             >
-              <i className="fas fa-plus"> Add Category</i>
+              <i className="fas fa-plus"> Add Category </i>
             </button>
           </div>
 
           <div className="col-md-4 my-1">
-            <button className="btn btn-outline-warning btn-block">
+            <button className="btn btn-outline-warning btn-block"
+            data-toggle="modal"
+            data-target="#addProductModal"
+            >
               <i className="fas fa-plus"> Add Product </i>
             </button>
           </div>
 
           <div className="col-md-4 my-1">
             <button className="btn btn-outline-success btn-block">
-              <i className="fas fa-money-check-alt"> View Orders</i>
+              <i className="fas fa-money-check-alt"> View Orders </i>
             </button>
           </div>
         </div>
@@ -132,12 +165,59 @@ const AdminDashboard = () => {
       </div>
     </div>
   );
+
+  const showProductModal = () => (
+    <div id="addProductModal" className="modal" onClick={handleMessages}>
+      <div className="modal-dialog modal-dialog-centered modal-lg">
+        <div className="modal-content">
+          <form onSubmit={handleProductSubmit}>
+            <div className="modal-header bg-info text-white">
+              <h5 className="modal-title">Add Product</h5>
+              <button className="close" data-dismiss="modal">
+                <span>
+                  <i className="fas fa-times"></i>
+                </span>
+              </button>
+            </div>
+            <div className="modal-body my-2">
+              {errorMsg && showErrorMsg(errorMsg)}
+              {successMsg && showSuccessMsg(successMsg)}
+
+              {loading ? (
+                <div className="text-center">{showLoading()}</div>
+              ) : (
+                <Fragment>
+                  <label className="text-secondary">Product</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="product"
+                    value={product}
+                    onChange={handleProductChange}
+                  />
+                </Fragment>
+              )}
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-secondary" data-dismiss="modal">
+                Close
+              </button>
+              <button type="submit" className="btn btn-info">
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
   
   return (
     <section>
       {showHeader()}
       {showActionBtns()}
       {showCategoryModal()}
+      {showProductModal()}
     </section>
   );
 };
