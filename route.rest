@@ -7,3 +7,17 @@ Content-Type: application/json
     "password": "1234546",
     "password2": "123456"
 }
+
+
+###
+
+POST http://localhost:5000/api/auth/product
+Content-Type: application/json
+
+{
+    "category": "fruits",
+    "product": "apple",
+    "image": "sldkfjdskf.jpg",
+    "quantity": 10,
+    "price": 1,
+}
