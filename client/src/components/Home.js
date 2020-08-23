@@ -2,7 +2,7 @@ import React from 'react';
 
 const Home = () => {
     return (
-        <p>Inside Home Component!</p>
+        <h1> Inside Home Component </h1>
     );
 };
 
