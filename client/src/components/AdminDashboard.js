@@ -1,14 +1,33 @@
-import React, { useState, Fragment } from 'react';
-import { createCategory } from '../api/category';
+import React, { useState, useEffect, Fragment } from 'react';
+import { createCategory, getCategories } from '../api/category';
 import isEmpty from 'validator/lib/isEmpty';
 import { showErrorMsg, showSuccessMsg } from '../helpers/message';
 import { showLoading } from '../helpers/loading';
 
 const AdminDashboard = () => {
+    const [categories, setCategories] = useState(null);
     const [category, setCategory] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
     const [loading, setLoading] = useState(false);
+
+    /****************************
+     * LIFECYCLE METHODS
+     ***************************/
+
+     useEffect(() => {
+        loadCategories();
+     }, [loading]);
+
+     const loadCategories = async () => {
+        await getCategories()
+            .then(response => {
+                setCategories(response.data.categories);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+     };
 
     /****************************
      * EVENT HANDLERS
@@ -203,9 +222,11 @@ const AdminDashboard = () => {
                                       <label className='text-secondary'> Category </label>
                                       <select className='custom-select mr-sm-2'>
                                         <option>Choose One...</option>
-                                        <option>Fruits</option>
-                                        <option>Vegetables</option>
-                                        <option>Dairy</option>
+                                        {categories && categories.map(c => (
+                                            <option key={c._id} value={c._id}>
+                                                {c.category}
+                                            </option>
+                                        ))}
                                       </select>
                                     </div>
 
