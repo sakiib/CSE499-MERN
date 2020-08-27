@@ -2,6 +2,14 @@ import React, { Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { isAuthenticated, logout } from '../helpers/auth';
 
+const isActive = (history, path) => {
+    if (history.location.pathname === path) {
+        return {color: '#61DBFB'};
+    } else {
+        return {color: '#ffff'};
+    }
+};
+
 const Header = ({ history }) => {
     const handleLogout = (evt) => {
         logout(() => {
@@ -9,8 +17,8 @@ const Header = ({ history }) => {
         });
     };
     const showNavigation = () => (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <Link to='/' className="navbar-brand">Logo</Link>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <Link to='/' className="navbar-brand" >Logo</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
@@ -21,13 +29,13 @@ const Header = ({ history }) => {
                     {!isAuthenticated() && (
                         <Fragment> 
                             <li className="nav-item">
-                                <Link to='/' className="nav-link"> <i className='fas fa-home'> </i> Home </Link>
+                                <Link to='/' className="nav-link" style={isActive(history, '/')} > <i className='fas fa-home'> </i> Home </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to='/signup' className="nav-link"> <i className='fas fa-edit'></i> SignUp</Link>
+                                <Link to='/signup' className="nav-link" style={isActive(history, '/signup')} > <i className='fas fa-edit'></i> Signup </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to='/signin' className="nav-link"> <i className='fas fa-sign-in-alt'></i> SignIn </Link>
+                                <Link to='/signin' className="nav-link" style={isActive(history, '/signin')} > <i className='fas fa-sign-in-alt'></i> Signin </Link>
                             </li>
                         </Fragment>
                     )}
@@ -35,7 +43,7 @@ const Header = ({ history }) => {
                     {isAuthenticated() && isAuthenticated().role === 0 && (
                         <Fragment>
                             <li className='nav-item'>
-                                <Link to='/user/dashboard' className='nav-link'>
+                                <Link to='/user/dashboard' className='nav-link' style={isActive(history, '/user/dashboard')}>
                                     <i className='fas fa-home'></i> Dashboard
                                 </Link>
                             </li>
@@ -47,7 +55,7 @@ const Header = ({ history }) => {
                             <li className='nav-item'>
                                 <Link
                                     to='/admin/dashboard'
-                                    className='nav-link'
+                                    className='nav-link' style={isActive(history, '/admin/dashboard')}
                                 >
                                     <i className='fas fa-home'></i> Dashboard
                                 </Link>
@@ -59,7 +67,7 @@ const Header = ({ history }) => {
                         <Fragment>
                             <li className='nav-item'>
                                 <button
-                                    className='btn btn-link text-secondary text-decoration-none pl-0'
+                                    className='btn btn-link text-secondary text-warning text-decoration-none pl-0'
                                     onClick={handleLogout}
                                 >
                                     <i className='fas fa-sign-out-alt'></i>{' '} Logout
